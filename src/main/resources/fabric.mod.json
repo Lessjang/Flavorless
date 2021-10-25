@@ -32,7 +32,8 @@
   "entrypoints": {
   },
   "mixins": [
-    "flavorless.mixins.json"
+    "flavorless.mixins.json",
+    "flavorless-client.mixins.json"
   ],
 
   "depends": {

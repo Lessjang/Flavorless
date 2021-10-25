@@ -4,7 +4,6 @@
   "package": "io.github.lessjang.flavorless.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
