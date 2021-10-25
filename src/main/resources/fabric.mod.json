@@ -31,6 +31,7 @@
   "environment": "*",
   "entrypoints": {
   },
+  "accessWidener" : "everything.accesswidener",
   "mixins": [
     "flavorless.mixins.json",
     "flavorless-client.mixins.json"
@@ -43,6 +44,6 @@
     "java": ">=16"
   },
   "suggests": {
-    "another-mod": "*"
+    "databreaker": "*"
   }
 }
