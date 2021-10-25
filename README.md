@@ -1,9 +1,8 @@
-# Fabric Example Mod
+# Flavorless
 
-## Setup
+*Minecraft in name only, for it is neither*
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+Removes vanilla from Minecraft
 
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This is a Fabric mod, but does not require the Fabric mod.
+That is, as long as fabric-loom (the fabric modloader) is present, vanilla will not be.
