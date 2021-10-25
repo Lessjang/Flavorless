@@ -5,6 +5,8 @@ build/
 out/
 classes/
 
+private.gradle
+
 # eclipse
 
 *.launch
@@ -24,9 +26,10 @@ bin/
 .classpath
 .project
 
-# macos
+# naughty filesystems
 
 *.DS_Store
+.directory
 
 # fabric
 
