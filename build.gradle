@@ -1,3 +1,4 @@
+//file:noinspection GroovyAssignabilityCheck
 plugins {
 	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
@@ -21,7 +22,7 @@ repositories {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/everything.accesswidener")
+	accessWidenerPath.set file("src/main/resources/everything.accesswidener")
 }
 
 dependencies {
@@ -41,8 +42,8 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 16
+	it.options.encoding "UTF-8"
+	it.options.release.set 16
 }
 
 java {
