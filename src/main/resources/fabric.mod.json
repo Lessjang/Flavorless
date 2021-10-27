@@ -30,11 +30,13 @@
 
   "environment": "*",
   "entrypoints": {
+    "main": [
+      "io.github.lessjang.flavorless.Flavorless"
+    ]
   },
   "accessWidener" : "generated.accesswidener",
   "mixins": [
-    "flavorless.mixins.json",
-    "flavorless-client.mixins.json"
+    "flavorless.mixins.json"
   ],
 
   "depends": {
