@@ -31,7 +31,7 @@
   "environment": "*",
   "entrypoints": {
   },
-  "accessWidener" : "everything.accesswidener",
+  "accessWidener" : "generated.accesswidener",
   "mixins": [
     "flavorless.mixins.json",
     "flavorless-client.mixins.json"

@@ -22,7 +22,7 @@ repositories {
 }
 
 loom {
-	accessWidenerPath.set file("src/main/resources/everything.accesswidener")
+	accessWidenerPath.set file("src/main/resources/generated.accesswidener")
 }
 
 dependencies {
@@ -53,6 +53,105 @@ java {
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
+	}
+}
+
+
+public class WidenerSpec {
+	String keyword = "mutable";
+	String className;
+	String descriptor;
+	
+	public WidenerSpec(String keyword, String name, String descriptor) {
+		this.keyword = keyword;
+		this.className = name;
+		this.descriptor = descriptor;
+	}
+	
+	@Override
+	public int hashCode() {
+		int result = keyword.hashCode();
+		result *= 31;
+		result += className.hashCode();
+		result *= 31;
+		result += descriptor.hashCode();
+		return result;
+	}
+}
+
+public WidenerSpec mutable(String className, String descriptor) {
+	return new WidenerSpec("mutable", className, descriptor);
+}
+
+public List<String> expandWideners(List<WidenerSpec> wideners) {
+	Set<String> classNames = new HashSet<>();
+	for(WidenerSpec widener : wideners) classNames.add(widener.className);
+	
+	def mappingsJar = configurations.mappingsFinal.find { true }
+	def mappingsFile = new File(mappingsJar.parentFile, "mappings/"+mappingsJar.getName().replace("-final.jar", ".tiny"))
+	
+	String curClass = "java/lang/Void";
+	List<String> result = new ArrayList<>();
+	
+	mappingsFile.eachLine {
+		if (it.startsWith('c\t')) {
+			def parts = it.split('\t');
+			curClass = parts[3];
+		} else if (it.trim().startsWith('f\t')) {
+			if (classNames.contains(curClass)) {
+			
+				def parts = it.trim().split('\t');
+				def fieldName = parts[4];
+				
+				for(WidenerSpec widener : wideners) {
+					if (widener.className.equals(curClass)) {
+						result.add(widener.keyword+"\tfield\t"+widener.className+"\t"+fieldName+"\t"+widener.descriptor);
+					}
+				}
+				
+				/*
+				//if (curClass.equals(className)) {
+					def parts = it.trim().split('\t');
+					def fieldName = parts[4];
+					
+					//println blockName;
+					curFields.add(fieldName);
+				}*/
+			}
+		}
+	}
+	
+	return result;
+}
+
+/**
+ * Given a map of binary class names to field lists, such as the one returned by getAllFields, generate an accesswidener
+ * file called generated.accesswidener which forces each field specified to be mutable (non-final).
+ */
+public void writeAccessWidener(List<String> wideners) {
+	def widenerFile = new File(project.projectDir, "src/main/resources/generated.accesswidener");
+	
+	def writer = new FileWriter(widenerFile);
+	
+	writer.println("accessWidener\tv1\tnamed");
+	for(String s : wideners) {
+		writer.println(s);
+	}
+	
+	writer.flush();
+	writer.close();
+}
+
+
+tasks.register("accesswidener") {
+	doLast {
+		//def allBlocks = getAllFinalFields("net/minecraft/block/Blocks");
+		def allBlocks = expandWideners([
+			mutable("net/minecraft/block/Blocks", "Lnet/minecraft/block/Block;"),
+			mutable("net/minecraft/world/gen/surfacebuilder/SurfaceBuilder", "Lnet/minecraft/block/Block;")
+			]);
+			
+		writeAccessWidener(allBlocks);
 	}
 }
 

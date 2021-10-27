@@ -28,7 +28,9 @@ import net.minecraft.world.gen.carver.CaveCarverConfig;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 
-@Mixin({Blocks.class , /*SurfaceBuilder.class, ConfiguredSurfaceBuilders.class, CarverDebugConfig.class, CarverConfig.class, CaveCarverConfig.class*/})
+/*, SurfaceBuilder.class, ConfiguredSurfaceBuilders.class/*, CarverDebugConfig.class, CarverConfig.class, CaveCarverConfig.class*/
+
+@Mixin({Blocks.class })
 public class BlocksMixin {
 	
 	@Inject(method = "<clinit>", at = @At("HEAD"), cancellable=true)
@@ -43,20 +45,21 @@ public class BlocksMixin {
 			}
 		};
 		
-		Block unvoidBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(-1.0F, 3600000.0F).dropsNothing().allowsSpawning((state, view, pos, entType)->false));
+		//Block unvoidBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(-1.0F, 3600000.0F).dropsNothing().allowsSpawning((state, view, pos, entType)->false));
 		
-		for(Field f : Blocks.class.getDeclaredFields()) {
+		Field[] fields = Blocks.class.getDeclaredFields();
+		for(int i=0; i<fields.length; i++) {
+			Field f = fields[i];
+			
 			//match "static Block" fields
 			if (!Modifier.isStatic(f.getModifiers())) continue;
 			if (!f.getType().equals(Block.class)) continue;
 			
-			//try {
-				//f.setAccessible(true);
-				//f.set(null, voidBlock);
-				//f.setAccessible(false);
-			//} catch (IllegalArgumentException | IllegalAccessException e) {
-			//	e.printStackTrace();
-			//}
+			try {
+				f.set(null, (i==0) ? voidBlock : voidBlock);
+				System.out.println("SET "+f.getName());
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+			}
 		}
 		
 		info.cancel();

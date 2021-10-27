@@ -1,1 +1,18 @@
 accessWidener	v1	named
+mutable field net/minecraft/block/Blocks AIR Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks DIRT Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks GRASS_BLOCK Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks PODZOL Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks GRAVEL Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks STONE Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks COARSE_DIRT Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks SAND Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks RED_SAND Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks WHITE_TERRACOTTA Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks MYCELIUM Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks SOUL_SAND Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks NETHERRACK Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks END_STONE Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks CRIMSON_NYLIUM Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks WARPED_NYLIUM Lnet/minecraft/block/Block;
+mutable field net/minecraft/block/Blocks NETHER_WART_BLOCK Lnet/minecraft/block/Block;
