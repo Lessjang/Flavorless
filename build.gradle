@@ -103,8 +103,8 @@ List<String> expandWideners(List<WidenerSpec> wideners) {
 	Set<String> classNames = new HashSet<>()
 	for(WidenerSpec widener : wideners) classNames.add(widener.className)
 
-	def mappingsJar = configurations.mappingsFinal.find { true }
-	def mappingsFile = new File(mappingsJar.parentFile, "mappings/"+mappingsJar.getName().replace("-final.jar", ".tiny"))
+	File mappingsJar = configurations.mappingsFinal.find { true }
+	File mappingsFile = new File(mappingsJar.parentFile, "mappings/"+mappingsJar.getName().replace("-final.jar", ".tiny"))
 
 	String curClass = "java/lang/Void"
 	List<String> result = new ArrayList<>()
@@ -161,13 +161,14 @@ void writeAccessWidener(List<String> wideners) {
 
 tasks.register("accesswidener") {
 	doLast {
-		//def allBlocks = getAllFinalFields("net/minecraft/block/Blocks");
-		def allBlocks = expandWideners([
-			mutable("net/minecraft/block/Blocks", "Lnet/minecraft/block/Block;"),
-			mutable("net/minecraft/world/gen/surfacebuilder/SurfaceBuilder", "Lnet/minecraft/block/Block;")
+		def allAWs = expandWideners([
+				mutable("net/minecraft/block/Blocks", "Lnet/minecraft/block/Block;"),
+				mutable("net/minecraft/item/Items", "Lnet/minecraft/item/Item;"),
+				mutable("net/minecraft/world/gen/surfacebuilder/SurfaceBuilder", "Lnet/minecraft/world/gen/surfacebuilder/SurfaceBuilder;"),
+				mutable("net/minecraft/world/gen/surfacebuilder/ConfiguredSurfaceBuilders", "Lnet/minecraft/world/gen/surfacebuilder/ConfiguredSurfaceBuilder")
 			])
 
-		writeAccessWidener(allBlocks)
+		writeAccessWidener(allAWs)
 	}
 }
 

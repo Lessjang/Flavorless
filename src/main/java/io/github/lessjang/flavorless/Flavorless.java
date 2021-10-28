@@ -2,8 +2,6 @@ package io.github.lessjang.flavorless;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
