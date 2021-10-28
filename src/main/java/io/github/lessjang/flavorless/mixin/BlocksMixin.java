@@ -28,8 +28,6 @@ import net.minecraft.world.gen.carver.CaveCarverConfig;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 
-/*, SurfaceBuilder.class, ConfiguredSurfaceBuilders.class/*, CarverDebugConfig.class, CarverConfig.class, CaveCarverConfig.class*/
-
 @Mixin({Blocks.class })
 public class BlocksMixin {
 	
@@ -45,7 +43,7 @@ public class BlocksMixin {
 			}
 		};
 		
-		//Block unvoidBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(-1.0F, 3600000.0F).dropsNothing().allowsSpawning((state, view, pos, entType)->false));
+		Block unvoidBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(-1.0F, 3600000.0F).dropsNothing().allowsSpawning((state, view, pos, entType)->false));
 		
 		Field[] fields = Blocks.class.getDeclaredFields();
 		for(int i=0; i<fields.length; i++) {
@@ -56,8 +54,8 @@ public class BlocksMixin {
 			if (!f.getType().equals(Block.class)) continue;
 			
 			try {
-				f.set(null, (i==0) ? voidBlock : voidBlock);
-				System.out.println("SET "+f.getName());
+				f.set(null, (i==0) ? voidBlock : unvoidBlock);
+				//System.out.println("SET "+f.getName());
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 			}
 		}

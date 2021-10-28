@@ -4,7 +4,8 @@
   "package": "io.github.lessjang.flavorless.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-	"BlocksMixin"
+	"BlocksMixin",
+	"SimpleStaticNukesMixin"
   ],
   "injectors": {
     "defaultRequire": 1
