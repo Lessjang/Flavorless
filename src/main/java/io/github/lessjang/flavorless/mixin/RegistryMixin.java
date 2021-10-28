@@ -15,7 +15,7 @@ public class RegistryMixin {
 	 */
 	@Inject(method = "register(Lnet/minecraft/util/registry/Registry;Lnet/minecraft/util/Identifier;Ljava/lang/Object;)Ljava/lang/Object;",
 			at = @At("HEAD"), cancellable = true)
-	private static <V> void onRegister(Registry<V> registry, Identifier id, V entry, CallbackInfoReturnable<V> cir) {
+	private static <V> void mixin_register(Registry<V> registry, Identifier id, V entry, CallbackInfoReturnable<V> cir) {
 		String namespace = id.getNamespace();
 		String path = id.getPath();
 

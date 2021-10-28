@@ -1,7 +1,6 @@
 package io.github.lessjang.flavorless.mixin;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,23 +13,23 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.github.lessjang.flavorless.Flavorless.LOGGER;
-import static io.github.lessjang.flavorless.Flavorless.VOID_BLOCK;
+import static io.github.lessjang.flavorless.Flavorless.NO_OP_SB;
 
-@Mixin(Blocks.class)
-public class BlocksMixin {
+@Mixin(SurfaceBuilder.class)
+public class SurfaceBuilderMixin {
 	/**
 	 * @reason preventing errors when removing vanilla content
 	 */
 	@Inject(method = "<clinit>", at = @At("HEAD"), cancellable=true)
 	private static void mixin_clinit(CallbackInfo info) {
-		List<Field> fields = Arrays.stream(Blocks.class.getDeclaredFields())
-				.filter(f -> Modifier.isStatic(f.getModifiers()) && f.getType().equals(Block.class)).toList();
+		List<Field> fields = Arrays.stream(SurfaceBuilder.class.getDeclaredFields())
+				.filter(f -> Modifier.isStatic(f.getModifiers()) && f.getType().equals(SurfaceBuilder.class)).toList();
 		final List<String> reset = new ArrayList<>(); // Fields successfully reset
 		for (Field f : fields) {
 			final String name = f.getName();
 
 			try {
-				f.set(null, VOID_BLOCK);
+				f.set(null, NO_OP_SB);
 			} catch (Throwable ignored) {
 				LOGGER.error("Couldn't cancel field: " + name);
 				continue;
@@ -39,7 +38,7 @@ public class BlocksMixin {
 			reset.add(name);
 		}
 
-		LOGGER.warn("Reset these " + reset.size() + " fields in Blocks.class: " + reset);
+		LOGGER.warn("Reset these " + reset.size() + " fields in SurfaceBuilder.class: " + reset);
 		reset.clear(); // Remove from memory
 		info.cancel();
 	}
